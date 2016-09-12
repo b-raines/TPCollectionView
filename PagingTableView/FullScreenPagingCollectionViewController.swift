@@ -11,7 +11,7 @@ import UIKit
 private let reuseIdentifier = "FullScreenPagingCell"
 
 class FullScreenPagingCollectionViewController: UICollectionViewController {
-    let colors: [[UIColor]] = [[.blue, .red, .green, .purple, .yellow]]
+    let images: [[String]] = [["water_glass", "sneaker", "heart"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,42 +20,24 @@ class FullScreenPagingCollectionViewController: UICollectionViewController {
         self.collectionView!.register(FullScreenPagingCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView?.isPagingEnabled = false
         collectionView?.decelerationRate = UIScrollViewDecelerationRateFast
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: .UIApplicationDidChangeStatusBarOrientation, object: nil)
-    }
-    
-    func deviceOrientationDidChange() {
-        if let indexPath = collectionView?.indexPathsForVisibleItems.last {
-            collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: false)
-        }
     }
     
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return colors.count
+        return images.count
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colors[section].count
+        return images[section].count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        cell.contentView.backgroundColor = colors[indexPath.section][indexPath.row]
-        cell.
-    
-        return cell
-    }
-}
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FullScreenPagingCollectionViewCell
+        
+        cell.image = UIImage(named: images[indexPath.section][indexPath.row])
 
-extension FullScreenPagingCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(
-            width: collectionView.bounds.width,
-            height: collectionView.bounds.height
-        )
+        return cell
     }
 }

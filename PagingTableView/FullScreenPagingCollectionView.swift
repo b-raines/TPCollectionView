@@ -9,6 +9,8 @@
 import UIKit
 
 class FullScreenPagingCollectionView: UICollectionView {
+    let tabBarHeight = UITabBarController().tabBar.bounds.height
+    
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         clipsToBounds = false
